@@ -29,7 +29,6 @@ Route::middleware([
     Route::post('/local', [LocalController::class, 'store'])->name('local.store');
 
     Route::put('/reserva/cancelar/{id}', [DashboardController::class, 'cancelar'])->name('reserva.cancelar');
-
     
 });
 

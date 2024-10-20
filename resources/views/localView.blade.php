@@ -1,5 +1,5 @@
 <x-app-layout>
-<h3 class="text-center mt-4 uppercase font-bold" style="font-size: 2rem;"> {{ $local->nombre }}</h3>
+    <h3 class="text-center mt-4 uppercase font-bold" style="font-size: 2rem;"> {{ $local->nombre }}</h3>
     <main class="grid grid-cols-1 md:grid-cols-2 gap-4 contenedor py-4">
 
         <section>
@@ -71,9 +71,9 @@
     </main>
 
     @auth
-        <div class="text-center">
-            <button id="reservar" class="w-1/2 border rounded-md bg-principal text-white font-bold text-lg p-3 my-5">Reservar</button>
-        </div>
+    <div class="text-center">
+        <button id="reservar" class="w-1/2 border rounded-md bg-principal text-white font-bold text-lg p-3 my-5">Reservar</button>
+    </div>
     @endauth
 
     <div id="reservacionContenedor" class="">
@@ -83,16 +83,16 @@
             @csrf
             <input type="hidden" name="local_id" value="{{$local->idLocal}}">
             @auth
-                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
             @endauth
             <input type="hidden" name="total" id="totalInput">
             <input type="hidden" name="cancelada" value="0">
-            
+
             <div class="w-10/12 md:w-2/4 mx-auto my-6">
                 <label for="fechaInicio" class="block text-sm font-medium text-slate-700">Fecha de inicio</label>
                 <input type="datetime-local" name="fecha_inicio" id="fechaInicio" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500">
             </div>
-            
+
             <div class="w-10/12 md:w-2/4 mx-auto my-6">
                 <label for="fechaFin" class="block text-sm font-medium text-slate-700">Fecha de Fin</label>
                 <input type="datetime-local" name="fecha_fin" id="fechaFin" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500">
@@ -131,8 +131,16 @@
     const totalReserva = document.getElementById("totalReserva");
     const totalInput = document.getElementById("totalInput");
 
-    const precioPorHora = {{ $local->costoHora }}; 
-    const precioRenta = {{ $local->precioRenta }};
+    const precioPorHora = {
+        {
+            $local - > costoHora
+        }
+    };
+    const precioRenta = {
+        {
+            $local - > precioRenta
+        }
+    };
     const FinRes = document.getElementById("FinRes");
 
     const confirmModal = document.getElementById("confirmModal");
@@ -167,7 +175,7 @@
 
     confirmBtn.addEventListener('click', () => {
         confirmModal.classList.add("hidden");
-        reservaForm.submit(); 
+        reservaForm.submit();
     });
 
     cancelBtn.addEventListener('click', () => {
@@ -179,13 +187,13 @@
         const fin = new Date(fechaFin.value);
 
         const fechaActual = new Date();
-        fechaActual.setDate(fechaActual.getDate() + 1); 
+        fechaActual.setDate(fechaActual.getDate() + 1);
 
         if (
-            fechaInicio.value && 
-            fechaFin.value && 
-            fin > inicio && 
-            inicio >= fechaActual && 
+            fechaInicio.value &&
+            fechaFin.value &&
+            fin > inicio &&
+            inicio >= fechaActual &&
             fin >= fechaActual
         ) {
             FinRes.disabled = false;
@@ -214,8 +222,6 @@
         total += precioRenta;
 
         totalReserva.textContent = total.toFixed(2);
-        totalInput.value = total.toFixed(2); 
+        totalInput.value = total.toFixed(2);
     }
 </script>
-
-
